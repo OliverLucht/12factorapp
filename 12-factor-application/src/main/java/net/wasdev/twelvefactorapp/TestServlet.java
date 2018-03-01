@@ -40,7 +40,7 @@ public class TestServlet extends HttpServlet {
             out.println("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>");
             out.println("<title>" + "12 Factor Demo Application" + "</title></head>");
             out.println("<body>");
-            out.println("<h1>" + "Version 1.0 der 12 Factor Demo Anwendung" + "</h1>");  // Prints "Hello, world!"
+            out.println("<h1>" + "Version 1.0 der 12 Factor Demo Anwendung - Thomas Müller" + "</h1>");  // Prints "Hello, world!"
             out.println("<h1>" + "" + "</h1>");  
             out.println("<h1>" + "" + "</h1>");  
             out.println("<h4>" + "I.    Codebase:  Eine im Versionsmanagementsystem verwaltete Codebase, viele Deployments" + "</h4>");  // Prints "Hello, world!"
