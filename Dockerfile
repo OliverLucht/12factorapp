@@ -7,6 +7,8 @@ LABEL maintainer "oliver.lucht@de.ibm.com"
 
 ## Copy local server.xml (with endpoint definition and *hosts) file to the config directory in the container
 COPY ./12-factor-wlpcfg/servers/12FactorAppServer/server.xml /config/
+COPY ./12-factor-application/image.png /config/
+
 
 ## could be deleted?
 ARG REPOSITORIES_PROPERTIES=""
