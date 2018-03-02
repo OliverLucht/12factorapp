@@ -7,7 +7,7 @@ LABEL maintainer "oliver.lucht@de.ibm.com"
 
 ## Copy local server.xml (with endpoint definition and *hosts) file to the config directory in the container
 COPY ./12-factor-wlpcfg/servers/12FactorAppServer/server.xml /config/
-COPY ./12-factor-application/image.png /config/
+COPY ./12-factor-application/image.png /config/dropins/
 
 
 ## could be deleted?
@@ -33,6 +33,6 @@ ENV dbUsername=0b563b02-1e03-481d-863d-c32a477aef8f-bluemix
 ## Expose / open port 9082 which is the port the microservices uses
 EXPOSE 9082
 
-## Start the docker server
+## Start the web server
 #CMD ["/opt/ibm/docker/docker-server", "run", "defaultServer"]
 CMD ["/opt/ibm/wlp/bin/server", "run", "defaultServer"]
