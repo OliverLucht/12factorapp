@@ -42,7 +42,7 @@ public class TestServlet extends HttpServlet {
                         "<style>* { font-family: Arial } body { background-image:url(/image.png);}</style>" + 
                         "</head>");
             out.println("<body>");
-            out.println("<h1>" + "Version 1.0 der 12 Factor Demo Anwendung " + "</h1>");  // Prints "Hello, world!"
+            out.println("<h1>" + "Version 1.0 der 12 Factor Demo Anwendung" + "</h1>");  // Prints "Hello, world!"
             out.println("<h1>" + "" + "</h1>");  
             out.println("<h1>" + "" + "</h1>");  
             out.println("<h4>" + "I.    Codebase:  Eine im Versionsmanagementsystem verwaltete Codebase, viele Deployments" + "</h4>");  // Prints "Hello, world!"
