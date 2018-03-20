@@ -33,7 +33,7 @@ ingress:
   paths:
   - path: /12-factor-application/Test
   backend:
-    # define the service which belongs to this ingress
+    # define the service name which belongs to this ingress
     serviceName: an12factorappv1-12factorapp
     servicePort: 9082
   annotations:
