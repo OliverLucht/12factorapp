@@ -26,8 +26,8 @@ service:
 ingress:
   enabled: true
   # Used to create an Ingress record.
-  #hosts:
-  #  -
+  hosts:
+    - demo.com
   rules:
     - http:
   paths:
