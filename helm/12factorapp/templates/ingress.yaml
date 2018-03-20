@@ -17,8 +17,9 @@ metadata:
 spec:
   rules:
     {{- range $host := .Values.ingress.hosts }}
-    - host: {{ $host }}
-      http:
+#    - host: {{ $host }}
+#      http:
+     - http:
         paths:
           - path: /12-factor-application/Test
             backend:
