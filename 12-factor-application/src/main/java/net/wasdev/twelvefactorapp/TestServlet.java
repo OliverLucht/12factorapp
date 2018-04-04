@@ -38,11 +38,11 @@ public class TestServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");  // HTML 5
             out.println("<html><head>");
             out.println("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>");
-            out.println("<title>" + "12 Factor Demo Application" + "</title>" +
+            out.println("<title>" + "12 Factor Demo Application!" + "</title>" +
                         "<style>* { font-family: Arial } body { background-image:url(/image.png);}</style>" + 
                         "</head>");
             out.println("<body>");
-            out.println("<h1>" + "Version 3.0 der 12 Factor Demo Anwendung" + "</h1>");
+            out.println("<h1>" + "Version 1.0 der 12 Factor Demo Anwendung" + "</h1>");
             out.println("<h1>" + "" + "</h1>");  
             out.println("<h1>" + "" + "</h1>");  
             out.println("<h4>" + "I.    Codebase:  Eine im Versionsmanagementsystem verwaltete Codebase, viele Deployments" + "</h4>");  // Prints "Hello, world!"
