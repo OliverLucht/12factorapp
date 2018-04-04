@@ -51,7 +51,7 @@ podTemplate(label: 'mypod',
         container('helm'){
           sh 'echo ">>> Running Helm cli Test"'
           sh 'helm init'
-          sh 'helm ls'
+          sh 'helm ls --tls'
         }
 
         stage ('Test helm Chart'){
@@ -170,13 +170,13 @@ podTemplate(label: 'mypod',
                   sh """
                     #!/bin/bash
                     echo ">>> Installing new Helm Deployment Dryrun"
-                    helm install ${config.release.chart_dir} --set image.repository=${REPOSITORY},image.tag=${TAG} --dry-run --name ${config.release.name}
+                    helm install ${config.release.chart_dir} --set image.repository=${REPOSITORY},image.tag=${TAG} --dry-run --name ${config.release.name} --tls
                   """
                 } else {
                   sh """
                     #!/bin/bash
                     echo ">>> Upgrading Helm Deployment Dryrun"
-                    helm upgrade ${config.release.name} ${config.release.chart_dir} --set image.repository=${REPOSITORY},image.tag=${TAG} --dry-run
+                    helm upgrade ${config.release.name} ${config.release.chart_dir} --set image.repository=${REPOSITORY},image.tag=${TAG} --dry-run 
                   """
                 }
               } else {
@@ -184,14 +184,14 @@ podTemplate(label: 'mypod',
                   sh """
                     #!/bin/bash
                     echo ">>> Installing new Helm Deployment"
-                    helm install ${config.release.chart_dir} --set image.repository=${REPOSITORY},image.tag=${TAG} --name ${config.release.name}
+                    helm install ${config.release.chart_dir} --set image.repository=${REPOSITORY},image.tag=${TAG} --name ${config.release.name} --tls
 
                   """
                 } else {
                   sh """
                     #!/bin/bash
                     echo ">>> Upgrading Helm Deployment"
-                    helm upgrade ${config.release.name} ${config.release.chart_dir} --set image.repository=${REPOSITORY},image.tag=${TAG}
+                    helm upgrade ${config.release.name} ${config.release.chart_dir} --set image.repository=${REPOSITORY},image.tag=${TAG} --tls
                   """
                 }
               }
