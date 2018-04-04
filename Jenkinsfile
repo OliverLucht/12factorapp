@@ -51,7 +51,7 @@ podTemplate(label: 'mypod',
         container('helm'){
           sh 'echo ">>> Running Helm cli Test"'
           sh 'helm init'
-          sh 'helm ls --tls'
+          sh 'helm list --tls'
         }
 
         stage ('Test helm Chart'){
