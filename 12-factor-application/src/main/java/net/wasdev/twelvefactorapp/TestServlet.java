@@ -38,7 +38,7 @@ public class TestServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");  // HTML 5
             out.println("<html><head>");
             out.println("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>");
-            out.println("<title>" + "12 Factor Demo Application" + "</title>" +
+            out.println("<title>" + "12 Factor Demo Application!" + "</title>" +
                         "<style>* { font-family: Arial } body { background-image:url(/image.png);}</style>" + 
                         "</head>");
             out.println("<body>");
