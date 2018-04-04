@@ -61,11 +61,14 @@ podTemplate(label: 'mypod',
           cat <<EOS > /key.pem
           ${key} 
           EOS
-            
+          """
+          sh 'ls -l'  
+          sh """  
           cat <<EOS > /cert.pem
           ${cert} 
           EOS
           """
+          sh 'ls -l'  
             
           sh 'helm init'
           sh 'helm list --tls'
