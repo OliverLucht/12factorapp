@@ -114,11 +114,12 @@ podTemplate(label: 'mypod',
                              usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD']]) {
                         sh """
                         #!/bin/bash
-                        echo ">>> Pushing Image to dockerhub"
+                        echo ">>> Copy Certificate"
                         
                         mkdir /etc/docker/certs.d/mycluster.icp:8500/
                         cp ca.crt /etc/docker/certs.d/mycluster.icp:8500/
                         service docker restart
+                        echo ">>> Copy Certificate DONE"
                         
                         docker login -u=${DOCKER_USER} -p=${DOCKER_PASSWORD}
                         docker push ${DOCKER_USER}/${config.image.image_name}:${env.BRANCH_NAME}-${env.BUILD_NUMBER}
@@ -134,9 +135,11 @@ podTemplate(label: 'mypod',
                       DOCKER_USER=`cat /var/run/secrets/registry-account/username`
                       DOCKER_PASSWORD=`cat /var/run/secrets/registry-account/password`
                       
+                      echo ">>> Copy Certificate"
                       mkdir /etc/docker/certs.d/mycluster.icp:8500/
                       cp ca.crt /etc/docker/certs.d/mycluster.icp:8500/
                       service docker restart
+                      echo ">>> Copy Certificate DONE"
                       
                       docker login -u=\${DOCKER_USER} -p=\${DOCKER_PASSWORD} \${REGISTRY}
                       set -x   
