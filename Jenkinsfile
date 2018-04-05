@@ -134,14 +134,18 @@ podTemplate(label: 'mypod',
                       DOCKER_USER=`cat /var/run/secrets/registry-account/username`
                       DOCKER_PASSWORD=`cat /var/run/secrets/registry-account/password`
                       
-                      echo ">>> Copy Certificate"
+                      echo ">>> mkdir..."
                       mkdir -p /etc/docker/certs.d/mycluster.icp:8500/
+                      echo ">>> cp.."
                       cp ca.crt /etc/docker/certs.d/mycluster.icp:8500/
                       echo ">>> Copy Certificate DONE"
                       
                       docker login -u=\${DOCKER_USER} -p=\${DOCKER_PASSWORD} \${REGISTRY}
+                      echo ">>> set..."
                       set -x   
+                      echo ">>> push"
                       docker push \${REGISTRY}/\${NAMESPACE}/${config.image.image_name}:${env.BRANCH_NAME}-${env.BUILD_NUMBER}
+                      echo ">>> DONE!!"
                       """
                     }
 
