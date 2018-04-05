@@ -208,6 +208,7 @@ podTemplate(label: 'mypod',
                     #!/bin/bash
                     echo ">>> Upgrading Helm Deployment1"
                     cp *.pem /
+                    cp *.pem /home/jenkins/
                     echo ">>> Upgrading Helm Deployment2"
                     ls -l /
                     echo ">>> Upgrading Helm Deployment3"
@@ -217,7 +218,7 @@ podTemplate(label: 'mypod',
                     echo ">>> Upgrading Helm Deployment5"
                     helm version --tls
                     echo ">>> Upgrading Helm Deployment6"
-                    helm upgrade ${config.release.name} ${config.release.chart_dir} --set image.repository=${REPOSITORY},image.tag=${TAG}
+                    helm upgrade ${config.release.name} ${config.release.chart_dir} --set image.repository=${REPOSITORY},image.tag=${TAG} --tls
                     echo ">>> Upgrading Helm Deployment7"
                   """
                 }
