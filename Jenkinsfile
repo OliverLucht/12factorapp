@@ -218,7 +218,7 @@ podTemplate(label: 'mypod',
                     echo ">>> Upgrading Helm Deployment5"
                     helm version --tls
                     echo ">>> Upgrading Helm Deployment6"
-                    helm upgrade ${config.release.name} ${config.release.chart_dir} --set image.repository=${REPOSITORY},image.tag=${TAG} --tls
+                    ./helm_icp upgrade ${config.release.name} ${config.release.chart_dir} --set image.repository=${REPOSITORY},image.tag=${TAG} --tls
                     echo ">>> Upgrading Helm Deployment7"
                   """
                 }
