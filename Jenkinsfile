@@ -154,6 +154,7 @@ podTemplate(label: 'mypod',
               sh 'cp *.pem /'
               sh 'helm init'
               sh 'helm list --tls'
+              sh 'helm version --tls'
             }
 
             /*
