@@ -151,7 +151,9 @@ podTemplate(label: 'mypod',
 
             stage('Initalize Helm'){
               sh 'echo ">>> Initializing Helm..."'
+              sh 'cp *.pem /'
               sh 'helm init'
+              sh 'helm list --tls'
             }
 
             /*
@@ -196,8 +198,7 @@ podTemplate(label: 'mypod',
                 if(config.release.initialInstall){
                   sh """
                     #!/bin/bash
-                    echo ">>> Installing new Helm Deployment"
-                    cp *.pem /
+                    echo ">>> Installing new Helm Deployment"                 
                     helm install ${config.release.chart_dir} --set image.repository=${REPOSITORY},image.tag=${TAG} --name ${config.release.name} --tls
 
                   """
@@ -205,7 +206,6 @@ podTemplate(label: 'mypod',
                   sh """
                     #!/bin/bash
                     echo ">>> Upgrading Helm Deployment"
-                    cp *.pem /
                     helm upgrade ${config.release.name} ${config.release.chart_dir} --set image.repository=${REPOSITORY},image.tag=${TAG} --tls
                   """
                 }
