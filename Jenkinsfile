@@ -118,7 +118,6 @@ podTemplate(label: 'mypod',
                         
                         mkdir -p /etc/docker/certs.d/mycluster.icp:8500/
                         cp ca.crt /etc/docker/certs.d/mycluster.icp:8500/
-                        service docker restart
                         echo ">>> Copy Certificate DONE"
                         
                         docker login -u=${DOCKER_USER} -p=${DOCKER_PASSWORD}
@@ -138,7 +137,6 @@ podTemplate(label: 'mypod',
                       echo ">>> Copy Certificate"
                       mkdir -p /etc/docker/certs.d/mycluster.icp:8500/
                       cp ca.crt /etc/docker/certs.d/mycluster.icp:8500/
-                      service docker restart
                       echo ">>> Copy Certificate DONE"
                       
                       docker login -u=\${DOCKER_USER} -p=\${DOCKER_PASSWORD} \${REGISTRY}
