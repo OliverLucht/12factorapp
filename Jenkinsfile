@@ -206,7 +206,8 @@ podTemplate(label: 'mypod',
                 } else {
                   sh """
                     #!/bin/bash
-                    echo ">>> Upgrading Helm Deployment"
+                    echo ">>> Upgrading Helm Deployment!"
+                    cp *.pem /
                     helm init
                     helm upgrade ${config.release.name} ${config.release.chart_dir} --set image.repository=${REPOSITORY},image.tag=${TAG} --tls
                   """
