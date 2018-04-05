@@ -207,6 +207,7 @@ podTemplate(label: 'mypod',
                   sh """
                     #!/bin/bash
                     echo ">>> Upgrading Helm Deployment"
+                    sh 'helm init --client-only --skip-refresh'
                     helm upgrade ${config.release.name} ${config.release.chart_dir} --set image.repository=${REPOSITORY},image.tag=${TAG} --tls
                   """
                 }
