@@ -114,11 +114,8 @@ podTemplate(label: 'mypod',
                              usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD']]) {
                         sh """
                         #!/bin/bash
-                        echo ">>> Copy Certificate"
-                        
                         mkdir -p /etc/docker/certs.d/mycluster.icp:8500/
                         cp ca.crt /etc/docker/certs.d/mycluster.icp:8500/
-                        echo ">>> Copy Certificate DONE"
                         
                         docker login -u=${DOCKER_USER} -p=${DOCKER_PASSWORD}
                         docker push ${DOCKER_USER}/${config.image.image_name}:${env.BRANCH_NAME}-${env.BUILD_NUMBER}
@@ -134,18 +131,12 @@ podTemplate(label: 'mypod',
                       DOCKER_USER=`cat /var/run/secrets/registry-account/username`
                       DOCKER_PASSWORD=`cat /var/run/secrets/registry-account/password`
                       
-                      echo ">>> mkdir..."
                       mkdir -p /etc/docker/certs.d/mycluster.icp:8500/
-                      echo ">>> cp.."
                       cp ca.crt /etc/docker/certs.d/mycluster.icp:8500/
-                      echo ">>> Copy Certificate DONE"
                       
                       docker login -u=\${DOCKER_USER} -p=\${DOCKER_PASSWORD} \${REGISTRY}
-                      echo ">>> set..."
-                      set -x   
-                      echo ">>> push"
+                      set -x
                       docker push \${REGISTRY}/\${NAMESPACE}/${config.image.image_name}:${env.BRANCH_NAME}-${env.BUILD_NUMBER}
-                      echo ">>> DONE!!"
                       """
                     }
 
@@ -186,13 +177,12 @@ podTemplate(label: 'mypod',
 
               def TAG = "${env.BRANCH_NAME}-${env.BUILD_NUMBER}"
 
-              //sh 'echo ">>>>>>>>>>>>>>>>>>>>> " + $TAG'
-
               if(config.release.dryrun){
                 if(config.release.initialInstall){
                   sh """
                     #!/bin/bash
                     echo ">>> Installing new Helm Deployment Dryrun"
+                    cp *.pem /
                     helm install ${config.release.chart_dir} --set image.repository=${REPOSITORY},image.tag=${TAG} --dry-run --name ${config.release.name} --tls
                   """
                 } else {
@@ -207,6 +197,7 @@ podTemplate(label: 'mypod',
                   sh """
                     #!/bin/bash
                     echo ">>> Installing new Helm Deployment"
+                    cp *.pem /
                     helm install ${config.release.chart_dir} --set image.repository=${REPOSITORY},image.tag=${TAG} --name ${config.release.name} --tls
 
                   """
@@ -214,6 +205,7 @@ podTemplate(label: 'mypod',
                   sh """
                     #!/bin/bash
                     echo ">>> Upgrading Helm Deployment"
+                    cp *.pem /
                     helm upgrade ${config.release.name} ${config.release.chart_dir} --set image.repository=${REPOSITORY},image.tag=${TAG} --tls
                   """
                 }
