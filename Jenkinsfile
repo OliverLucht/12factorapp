@@ -208,7 +208,7 @@ podTemplate(label: 'mypod',
                     #!/bin/bash
                     echo ">>> Upgrading Helm Deployment1"
                     cp *.pem /
-                    cp *.pem /home/jenkins/
+                    cp *.pem /home/jenkins/.helm/
                     echo ">>> Upgrading Helm Deployment2"
                     ls -l /
                     echo ">>> Upgrading Helm Deployment3"
