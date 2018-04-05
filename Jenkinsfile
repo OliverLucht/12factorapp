@@ -116,7 +116,7 @@ podTemplate(label: 'mypod',
                         #!/bin/bash
                         echo ">>> Copy Certificate"
                         
-                        mkdir /etc/docker/certs.d/mycluster.icp:8500/
+                        mkdir -p /etc/docker/certs.d/mycluster.icp:8500/
                         cp ca.crt /etc/docker/certs.d/mycluster.icp:8500/
                         service docker restart
                         echo ">>> Copy Certificate DONE"
@@ -136,7 +136,7 @@ podTemplate(label: 'mypod',
                       DOCKER_PASSWORD=`cat /var/run/secrets/registry-account/password`
                       
                       echo ">>> Copy Certificate"
-                      mkdir /etc/docker/certs.d/mycluster.icp:8500/
+                      mkdir -p /etc/docker/certs.d/mycluster.icp:8500/
                       cp ca.crt /etc/docker/certs.d/mycluster.icp:8500/
                       service docker restart
                       echo ">>> Copy Certificate DONE"
