@@ -16,8 +16,8 @@ podTemplate(label: 'mypod',
         containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl', ttyEnabled: true, command: 'cat'),
         containerTemplate(name: 'docker' , image: 'docker:17.06.1-ce', ttyEnabled: true, command: 'cat'),
         containerTemplate(name: 'helm', image: 'lachlanevenson/k8s-helm:v2.7.2', command: 'cat', ttyEnabled: true),
-        //containerTemplate(name: 'helm', image: 'lachlanevenson/k8s-helm:v2.6.0', command: 'cat', ttyEnabled: true),
         containerTemplate(name: 'maven', image: 'maven:3.3.9-jdk-8-alpine', ttyEnabled: true, command: 'cat')
+        containerTemplate(name: 'bxpr', image: 'mycluster.icp:8500/default/helm-bx-icp:2.1.0.2', ttyEnabled: true, command: 'cat')
   ]) {
 
     node('mypod') {
@@ -147,7 +147,7 @@ podTemplate(label: 'mypod',
         }
 
         if (env.BRANCH_NAME == 'master') {
-          container('helm'){
+          container('bxpr'){
 
             stage('Initalize Helm'){
               sh 'echo ">>> Initializing Helm..."'
@@ -207,6 +207,8 @@ podTemplate(label: 'mypod',
                   sh """
                     #!/bin/bash
                     echo ">>> Upgrading Helm Deployment1"
+                    bx pr -u admin -p admin -a https://mycluster.icp:8443 -c id-icp-account
+                    echo ">>> Upgrading Helm Deployment1.5"
                     cp *.pem /
                     cp *.pem /home/jenkins/.helm/
                     echo ">>> Upgrading Helm Deployment2"
@@ -220,7 +222,7 @@ podTemplate(label: 'mypod',
                     echo ">>> Upgrading Helm Deployment6"
                     bx pr login
                     chmod +x helm_icp
-                    ./helm_icp upgrade ${config.release.name} ${config.release.chart_dir} --set image.repository=${REPOSITORY},image.tag=${TAG} --tls
+                    helm upgrade ${config.release.name} ${config.release.chart_dir} --set image.repository=${REPOSITORY},image.tag=${TAG} --tls
                     echo ">>> Upgrading Helm Deployment7"
                   """
                 }
