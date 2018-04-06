@@ -51,12 +51,17 @@ podTemplate(label: 'mypod',
 
         container('bxpr'){
           sh 'echo ">>> Running Helm cli Test"'
+          // copy bluemix file to home of root user to use the pr plugin  
           //sh 'cp -a /root/.bluemix /home/jenkins/'
+          // add the myclusterip to etc/hosts   
           //sh 'echo "10.134.214.140 mycluster.icp" >> /etc/hosts'  
+          // login to the cluster, needed due to security for helm commands   
           //sh 'bx pr login -u admin -p admin -a https://mycluster.icp:8443 -c id-icp-account --skip-ssl-validation'
+          // get the .pem files via cluster-config, needed for the --tls command
           //sh 'bx pr cluster-config mycluster'   
-          //sh 'cp /root/.helm/*.pem /home/jenkins/.helm/''
+          // copy the pem files
           //sh 'helm init'
+          //sh 'cp -r /root/.helm /home/jenkins/'
           //sh 'helm list --tls'
           //sh 'helm version --tls'  
             
@@ -162,8 +167,8 @@ podTemplate(label: 'mypod',
               sh 'echo "10.134.214.140 mycluster.icp" >> /etc/hosts'  
               sh 'bx pr login -u admin -p admin -a https://mycluster.icp:8443 -c id-icp-account --skip-ssl-validation'
               sh 'bx pr cluster-config mycluster'   
-              sh 'cp /root/.helm/*.pem /home/jenkins/.helm/'
               sh 'helm init'
+              sh 'cp -r /root/.helm /home/jenkins/'
               sh 'helm list --tls'
               sh 'helm version --tls'
               sh 'echo ">>> Initialized Helm..."'  
