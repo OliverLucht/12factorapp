@@ -59,9 +59,13 @@ podTemplate(label: 'mypod',
           sh 'bx pr login -u admin -p admin -a https://mycluster.icp:8443 -c id-icp-account --skip-ssl-validation'
           // get the .pem files via cluster-config, needed for the --tls command
           sh 'bx pr cluster-config mycluster'   
+          sh 'ls -al'
+          sh 'ls -al /'
+          sh 'ls -al /home/jenkins/'  
+          sh 'ls -al /root/'  
           // copy the pem files
           sh 'helm init'
-          sh 'cp -r /root/.helm/*.pem /home/jenkins/.helm/'
+          //sh 'cp /root/.helm/*.pem /home/jenkins/.helm/'
           sh 'helm list --tls'
           sh 'helm version --tls'  
             
