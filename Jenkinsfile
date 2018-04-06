@@ -153,6 +153,7 @@ podTemplate(label: 'mypod',
               sh 'echo ">>> Initializing Helm..."'
               sh 'cp *.pem /'
               sh 'cp *.pem /home/jenkins/.helm/'
+              sh 'bx help'
               sh 'bx pr -u admin -p admin -a https://mycluster.icp:8443 -c id-icp-account'
               sh 'bx pr cluster-config mycluster'    
               sh 'helm init'
