@@ -150,9 +150,9 @@ podTemplate(label: 'mypod',
 
         if (env.BRANCH_NAME == 'master') {
           container('bxpr'){
-
+            /*  
             stage('Initalize Helm'){
-              /*  
+              
               sh 'echo ">>> Initializing Helm..."'              
               sh 'cp -a /root/.bluemix /home/jenkins/'
               sh 'echo "10.134.214.140 mycluster.icp" >> /etc/hosts'  
@@ -162,8 +162,10 @@ podTemplate(label: 'mypod',
               sh 'helm list --tls'
               sh 'helm version --tls'
               sh 'echo ">>> Initialized Helm..."'  
-              */
+
             }
+            
+           */
 
             /*
             Initial Install creates a new Helm Deployment, otherwise a deployment is upgraded
