@@ -152,6 +152,7 @@ podTemplate(label: 'mypod',
             stage('Initalize Helm'){
               sh 'echo ">>> Initializing Helm..."'
               sh 'cp *.pem /'
+              sh 'cp *.pem /home/jenkins/.helm/'
               sh 'helm init'
               sh 'helm list --tls'
               sh 'helm version --tls'
