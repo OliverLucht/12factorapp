@@ -48,6 +48,11 @@ podTemplate(label: 'mypod',
           sh 'kubectl get nodes'
         }
 
+        
+        // copy bluemix file to home of jenkins user, so thet he could use the pr plugin
+        // add the myclusterip to etc/hosts  
+        // login to the cluster, needed due to security for helm commands  
+        // get the .pem files via cluster-config, needed for the --tls command
         container('bxpr'){
             withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'bx_pr_credentials',
             usernameVariable: 'BXPR_USER', passwordVariable: 'BXPR_PASSWORD']]) {
@@ -55,14 +60,10 @@ podTemplate(label: 'mypod',
                 #!/bin/bash
                 echo ">>> Running Helm cli Test"
                 echo ${BXPR_USER}
-                echo ${BXPR_PASSWORD}
-                // copy bluemix file to home of jenkins user, so thet he could use the pr plugin  
-                cp -a /root/.bluemix /home/jenkins/
-                // add the myclusterip to etc/hosts   
-                echo "10.134.214.140 mycluster.icp" >> /etc/hosts  
-                // login to the cluster, needed due to security for helm commands   
-                bx pr login -u ${BXPR_USER} -p ${BXPR_PASSWORD} -a https://mycluster.icp:8443 -c id-icp-account --skip-ssl-validation
-                // get the .pem files via cluster-config, needed for the --tls command
+                echo ${BXPR_PASSWORD} 
+                cp -a /root/.bluemix /home/jenkins/              
+                echo "10.134.214.140 mycluster.icp" >> /etc/hosts                
+                bx pr login -u ${BXPR_USER} -p ${BXPR_PASSWORD} -a https://mycluster.icp:8443 -c id-icp-account --skip-ssl-validation               
                 bx pr cluster-config mycluster   
                 helm init
                 helm list --tls
