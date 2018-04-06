@@ -52,6 +52,8 @@ podTemplate(label: 'mypod',
             withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'bx_pr_credentials',
             usernameVariable: 'BXPR_USER', passwordVariable: 'BXPR_PASSWORD']]) {
                 sh 'echo ">>> Running Helm cli Test"'
+                sh 'echo ${BXPR_USER}'
+                sh 'echo ${BXPR_PASSWORD}'
                 // copy bluemix file to home of jenkins user, so thet he could use the pr plugin  
                 sh 'cp -a /root/.bluemix /home/jenkins/'
                 // add the myclusterip to etc/hosts   
