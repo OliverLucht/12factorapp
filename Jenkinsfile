@@ -61,7 +61,7 @@ podTemplate(label: 'mypod',
           sh 'bx pr cluster-config mycluster'   
           // copy the pem files
           sh 'helm init'
-          sh 'cp -r /root/.helm /home/jenkins/'
+          sh 'cp -r /root/.helm/*.pem /home/jenkins/.helm/'
           sh 'helm list --tls'
           sh 'helm version --tls'  
             
