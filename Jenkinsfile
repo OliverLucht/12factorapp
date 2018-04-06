@@ -51,21 +51,24 @@ podTemplate(label: 'mypod',
         container('bxpr'){
             withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'bx_pr_credentials',
             usernameVariable: 'BXPR_USER', passwordVariable: 'BXPR_PASSWORD']]) {
-                sh 'echo ">>> Running Helm cli Test"'
-                sh 'echo ${BXPR_USER}'
-                sh 'echo ${BXPR_PASSWORD}'
+                sh """
+                #!/bin/bash
+                echo ">>> Running Helm cli Test"
+                echo ${BXPR_USER}
+                echo ${BXPR_PASSWORD}
                 // copy bluemix file to home of jenkins user, so thet he could use the pr plugin  
-                sh 'cp -a /root/.bluemix /home/jenkins/'
+                cp -a /root/.bluemix /home/jenkins/
                 // add the myclusterip to etc/hosts   
-                sh 'echo "10.134.214.140 mycluster.icp" >> /etc/hosts'  
+                echo "10.134.214.140 mycluster.icp" >> /etc/hosts  
                 // login to the cluster, needed due to security for helm commands   
-                sh 'bx pr login -u ${BXPR_USER} -p ${BXPR_PASSWORD} -a https://mycluster.icp:8443 -c id-icp-account --skip-ssl-validation'
+                bx pr login -u ${BXPR_USER} -p ${BXPR_PASSWORD} -a https://mycluster.icp:8443 -c id-icp-account --skip-ssl-validation
                 // get the .pem files via cluster-config, needed for the --tls command
-                sh 'bx pr cluster-config mycluster'   
-                sh 'helm init'
-                sh 'helm list --tls'
-                sh 'helm version --tls'
-                sh 'echo ">>> Helm cli Test Done"'
+                bx pr cluster-config mycluster   
+                helm init
+                helm list --tls
+                helm version --tls
+                echo ">>> Helm cli Test Done"
+                """
             }
         }
 
