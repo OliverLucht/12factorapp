@@ -153,8 +153,10 @@ podTemplate(label: 'mypod',
               sh 'echo ">>> Initializing Helm..."'
               sh 'cp *.pem /'
               sh 'cp *.pem /home/jenkins/.helm/'
-              sh 'bx help'
-              sh 'bx pr -u admin -p admin -a https://mycluster.icp:8443 -c id-icp-account'
+              sh 'ls -l /root/.bluemix'
+              sh 'cp -a /root/.bluemix /home/jenkins/'
+              sh 'bx plugin list'
+              sh 'bx pr login -u admin -p admin -a https://mycluster.icp:8443 -c id-icp-account'
               sh 'bx pr cluster-config mycluster'    
               sh 'helm init'
               sh 'helm list --tls'
@@ -211,7 +213,7 @@ podTemplate(label: 'mypod',
                   sh """
                     #!/bin/bash
                     echo ">>> Upgrading Helm Deployment1"
-                    bx pr -u admin -p admin -a https://mycluster.icp:8443 -c id-icp-account
+                    bx pr -u login admin -p admin -a https://mycluster.icp:8443 -c id-icp-account
                     echo ">>> Upgrading Helm Deployment1.5"
                     cp *.pem /
                     cp *.pem /home/jenkins/.helm/
@@ -224,8 +226,7 @@ podTemplate(label: 'mypod',
                     echo ">>> Upgrading Helm Deployment5"
                     helm version --tls
                     echo ">>> Upgrading Helm Deployment6"
-                    bx pr login
-                    chmod +x helm_icp
+                    
                     helm upgrade ${config.release.name} ${config.release.chart_dir} --set image.repository=${REPOSITORY},image.tag=${TAG} --tls
                     echo ">>> Upgrading Helm Deployment7"
                   """
