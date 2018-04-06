@@ -33,10 +33,6 @@ podTemplate(label: 'mypod',
         def configfile = readFile('Jenkinsfile.json')
         def config = new groovy.json.JsonSlurperClassic().parseText(configfile)
         println ">>> Pipeline Config ==> ${config}"
-
-        // read cert and key
-        def key = readFile('helm-cert/key.pem')
-        def cert = readFile('helm-cert/cert.pem')
         
         if(!config.pipeline.enabled){
           println ">>> Pipeline disabled"
@@ -55,6 +51,17 @@ podTemplate(label: 'mypod',
 
         container('bxpr'){
           sh 'echo ">>> Running Helm cli Test"'
+          //sh 'cp -a /root/.bluemix /home/jenkins/'
+          //sh 'echo "10.134.214.140 mycluster.icp" >> /etc/hosts'  
+          //sh 'bx pr login -u admin -p admin -a https://mycluster.icp:8443 -c id-icp-account --skip-ssl-validation'
+          //sh 'bx pr cluster-config mycluster'   
+          //sh 'cp /root/.helm/*.pem /home/jenkins/.helm/''
+          //sh 'helm init'
+          //sh 'helm list --tls'
+          //sh 'helm version --tls'  
+            
+            
+ 
           // copy key and cert files 
           sh 'cp *.pem /'
             
@@ -155,7 +162,7 @@ podTemplate(label: 'mypod',
               sh 'echo "10.134.214.140 mycluster.icp" >> /etc/hosts'  
               sh 'bx pr login -u admin -p admin -a https://mycluster.icp:8443 -c id-icp-account --skip-ssl-validation'
               sh 'bx pr cluster-config mycluster'   
-              sh 'cp *.pem /home/jenkins/.helm/'
+              sh 'cp /root/.helm/*.pem /home/jenkins/.helm/'
               sh 'helm init'
               sh 'helm list --tls'
               sh 'helm version --tls'
