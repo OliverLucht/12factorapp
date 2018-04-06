@@ -15,7 +15,7 @@ podTemplate(label: 'mypod',
     containers: [
         containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl', ttyEnabled: true, command: 'cat'),
         containerTemplate(name: 'docker' , image: 'docker:17.06.1-ce', ttyEnabled: true, command: 'cat'),
-        containerTemplate(name: 'helm', image: 'lachlanevenson/k8s-helm:v2.7.2', command: 'cat', ttyEnabled: true),
+        //containerTemplate(name: 'helm', image: 'lachlanevenson/k8s-helm:v2.7.2', command: 'cat', ttyEnabled: true),
         containerTemplate(name: 'maven', image: 'maven:3.3.9-jdk-8-alpine', ttyEnabled: true, command: 'cat'),
         containerTemplate(name: 'bxpr', image: 'mycluster.icp:8500/default/helm-bx-icp:2.1.0.2', ttyEnabled: true, command: 'cat')
   ]) {
@@ -53,7 +53,7 @@ podTemplate(label: 'mypod',
           sh 'kubectl get nodes'
         }
 
-        container('helm'){
+        container('bxpr'){
           sh 'echo ">>> Running Helm cli Test"'
           // copy key and cert files 
           sh 'cp *.pem /'
@@ -63,7 +63,7 @@ podTemplate(label: 'mypod',
         }
 
         stage ('Test helm Chart'){
-            container('helm'){
+            container('bxpr'){
               echo ">>> Running helm lint ${chart_dir}"
               sh "helm lint $chart_dir"
             }
@@ -150,18 +150,16 @@ podTemplate(label: 'mypod',
           container('bxpr'){
 
             stage('Initalize Helm'){
-              sh 'echo ">>> Initializing Helm..."'
-              sh 'cp *.pem /'
-              sh 'cp *.pem /home/jenkins/.helm/'
-              sh 'ls -l /root/.bluemix'
+              sh 'echo ">>> Initializing Helm..."'              
               sh 'cp -a /root/.bluemix /home/jenkins/'
               sh 'echo "10.134.214.140 mycluster.icp" >> /etc/hosts'  
-              sh 'bx plugin list'
               sh 'bx pr login -u admin -p admin -a https://mycluster.icp:8443 -c id-icp-account --skip-ssl-validation'
-              sh 'bx pr cluster-config mycluster'    
+              sh 'bx pr cluster-config mycluster'   
+              sh 'cp *.pem /home/jenkins/.helm/'
               sh 'helm init'
               sh 'helm list --tls'
               sh 'helm version --tls'
+              sh 'echo ">>> Initialized Helm..."'  
             }
 
             /*
@@ -227,7 +225,6 @@ podTemplate(label: 'mypod',
                 sh "helm test ${config.release.name} --cleanup --tls"
                }
             }
-
           }
         }
       }
