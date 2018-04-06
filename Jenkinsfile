@@ -15,7 +15,6 @@ podTemplate(label: 'mypod',
     containers: [
         containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl', ttyEnabled: true, command: 'cat'),
         containerTemplate(name: 'docker' , image: 'docker:17.06.1-ce', ttyEnabled: true, command: 'cat'),
-        //containerTemplate(name: 'helm', image: 'lachlanevenson/k8s-helm:v2.7.2', command: 'cat', ttyEnabled: true),
         containerTemplate(name: 'maven', image: 'maven:3.3.9-jdk-8-alpine', ttyEnabled: true, command: 'cat'),
         containerTemplate(name: 'bxpr', image: 'mycluster.icp:8500/default/helm-bx-icp:2.1.0.2', ttyEnabled: true, command: 'cat')
   ]) {
@@ -51,7 +50,7 @@ podTemplate(label: 'mypod',
 
         container('bxpr'){
           sh 'echo ">>> Running Helm cli Test"'
-          // copy bluemix file to home of root user to use the pr plugin  
+          // copy bluemix file to home of jenkins user, so thet he could use the pr plugin  
           sh 'cp -a /root/.bluemix /home/jenkins/'
           // add the myclusterip to etc/hosts   
           sh 'echo "10.134.214.140 mycluster.icp" >> /etc/hosts'  
@@ -62,6 +61,7 @@ podTemplate(label: 'mypod',
           sh 'helm init'
           sh 'helm list --tls'
           sh 'helm version --tls'
+          sh 'echo ">>> Helm cli Test Done"'  
         }
 
         stage ('Test helm Chart'){
