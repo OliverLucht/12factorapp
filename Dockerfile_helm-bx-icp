@@ -1,0 +1,37 @@
+FROM ubuntu:16.04
+
+RUN apt-get update && apt-get install -y \
+    curl \
+    wget \
+    apt-transport-https \
+    ca-certificates \
+    software-properties-common \
+    bash \
+ && rm -rf /var/lib/apt/lists/*
+
+# install docker 17.09.0~ce-0~ubuntu
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - \
+ && add-apt-repository \
+     "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+     $(lsb_release -cs) \
+     stable" \
+ && apt-get update \
+ && apt-get install -y docker-ce=17.09.0~ce-0~ubuntu \
+ && rm -rf /var/lib/apt/lists/*
+
+# install kubectl
+ENV KUBECTL_VERSION v1.9.1
+RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl
+RUN mv kubectl /usr/local/bin/kubectl
+RUN chmod +x /usr/local/bin/kubectl
+
+RUN curl -fsSL https://clis.ng.bluemix.net/install/linux | sh
+
+RUN echo "10.134.214.140 mycluster.icp " >> /etc/hosts \
+    && wget -q --no-check-certificate https://mycluster.icp:8443/api/cli/icp-linux-amd64 \
+    && bx plugin install icp-linux-amd64 -f \
+    && wget -q --no-check-certificate https://mycluster.icp:8443/helm-api/cli/linux-amd64/helm -O /usr/local/bin/helm \
+    && chmod +x /usr/local/bin/helm
+
+CMD bash
+
