@@ -1,82 +1,60 @@
-{
-  "kind": "Deployment",
-  "apiVersion": "extensions/v1beta1",
-  "metadata": {
-    "name": "an12factorapp",
-    "namespace": "default",
-    "selfLink": "/apis/extensions/v1beta1/namespaces/default/deployments/an12factorapp",
-    "uid": "f3552e3e-7155-11e7-bca9-000c29ea0aa5",
-    "resourceVersion": "1214",
-    "generation": 1,
-    "creationTimestamp": "2017-07-25T16:26:02Z",
-    "labels": {
-      "run": "an12factorapp"
-    },
-    "annotations": {
-      "deployment.kubernetes.io/revision": "1"
-    }
-  },
-  "spec": {
-    "replicas": 1,
-    "selector": {
-      "matchLabels": {
-        "run": "an12factorapp"
-      }
-    },
-    "template": {
-      "metadata": {
-        "creationTimestamp": null,
-        "labels": {
-          "run": "an12factorapp"
-        }
-      },
-      "spec": {
-        "containers": [
-          {
-            "name": "an12factorapp",
-            "image": "localhost:5000/12factorapp:latest",
-            "ports": [
-              {
-                "containerPort": 9082,
-                "protocol": "TCP"
-              }
-            ],
-            "resources": {},
-            "terminationMessagePath": "/dev/termination-log",
-            "terminationMessagePolicy": "File",
-            "imagePullPolicy": "Always"
-          }
-        ],
-        "restartPolicy": "Always",
-        "terminationGracePeriodSeconds": 30,
-        "dnsPolicy": "ClusterFirst",
-        "securityContext": {},
-        "schedulerName": "default-scheduler"
-      }
-    },
-    "strategy": {
-      "type": "RollingUpdate",
-      "rollingUpdate": {
-        "maxUnavailable": 1,
-        "maxSurge": 1
-      }
-    }
-  },
-  "status": {
-    "observedGeneration": 1,
-    "replicas": 1,
-    "updatedReplicas": 1,
-    "readyReplicas": 1,
-    "availableReplicas": 1,
-    "conditions": [
-      {
-        "type": "Available",
-        "status": "True",
-        "lastUpdateTime": "2017-07-25T16:26:02Z",
-        "lastTransitionTime": "2017-07-25T16:26:02Z",
-        "reason": "MinimumReplicasAvailable",
-        "message": "Deployment has minimum availability."
-      }
-    ]
-  }
-}
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: 12factorapp
+    chart: 12factorapp-1.0.0
+    heritage: Tiller
+    release: an12factorappv1
+  name: an12factorappv1-12factorapp
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: 12factorapp
+      release: an12factorappv1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: 12factorapp
+        release: an12factorappv1
+    spec:
+      containers:
+      - image: mycluster.icp:8500/default/12factorapp:master-153
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 9082
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: 12factorapp
+        ports:
+        - containerPort: 9082
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 9082
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
