@@ -14,11 +14,13 @@
     <webApplication contextRoot="12-factor-application" id="12-factor-application" location="12-factor-application.war" name="12-factor-application"/>
 
     <applicationMonitor updateTrigger="mbean" />
-
+    <!--
     <featureManager>
         <feature>ssl-1.0</feature>
     </featureManager>
     <keyStore id="defaultKeyStore" password="yourPassword" />
+    -->
+    
     <!-- clientAuthenticationSupported set to enable bidirectional trust -->
     <ssl id="defaultSSLConfig"
          keyStoreRef="defaultKeyStore"
