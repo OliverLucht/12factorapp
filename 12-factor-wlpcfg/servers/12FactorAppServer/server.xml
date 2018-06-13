@@ -10,14 +10,13 @@
 
     <httpEndpoint host="*" httpPort="9082" httpsPort="9445"
         id="defaultHttpEndpoint" />
-    <!--
+   
     <webApplication contextRoot="12-factor-application" id="12-factor-application" location="12-factor-application.war" name="12-factor-application"/>
-    <applicationMonitor updateTrigger="mbean" />    
-    -->
-    <!--
+ <!--    
+<applicationMonitor updateTrigger="mbean" />    
+-->
+
     <applicationMonitor updateTrigger="polled" pollingRate="500ms" dropins="dropins" dropinsEnabled="true"/>
-    -->
-    <applicationMonitor updateTrigger="mbean" pollingRate="500ms" dropins="dropins" dropinsEnabled="true"/>
     <!--
     <featureManager>
         <feature>ssl-1.0</feature>
