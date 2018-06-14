@@ -20,7 +20,8 @@ RUN if [ ! -z $REPOSITORIES_PROPERTIES ]; then echo $REPOSITORIES_PROPERTIES > /
     && rm -rf /output/workarea /output/logs
 
 ## Copy local .war file to the config/dropins directory in the container
-ADD ./12-factor-wlpcfg/servers/12FactorAppServer/apps/12-factor-application.war /config/dropins/
+## ADD ./12-factor-wlpcfg/servers/12FactorAppServer/apps/12-factor-application.war /config/dropins/
+ADD ./12-factor-wlpcfg/servers/12FactorAppServer/apps/12-factor-application.war /opt/ibm/wlp/usr/servers/defaultServer/dropins/
 
 ## Set some environment vars in the container
 ENV PATH=/opt/ibm/wlp/bin:$PATH
@@ -29,6 +30,7 @@ ENV WLP_OUTPUT_DIR=/opt/ibm/wlp/output
 ENV dbPassword=770a564648417076f49c7bb0275fbe7b1157aa842894ddb21bf208c74a948279
 ENV dbUrl=https://0b563b02-1e03-481d-863d-c32a477aef8f-bluemix:770a564648417076f49c7bb0275fbe7b1157aa842894ddb21bf208c74a948279@0b563b02-1e03-481d-863d-c32a477aef8f-bluemix.cloudant.com
 ENV dbUsername=0b563b02-1e03-481d-863d-c32a477aef8f-bluemix
+ENV LICENSE accept
 
 ## Expose / open port 9082 which is the port the microservices uses
 EXPOSE 9082
