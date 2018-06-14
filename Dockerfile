@@ -20,8 +20,8 @@ RUN if [ ! -z $REPOSITORIES_PROPERTIES ]; then echo $REPOSITORIES_PROPERTIES > /
     && rm -rf /output/workarea /output/logs
 
 ## Copy local .war file to the config/dropins directory in the container
-## ADD ./12-factor-wlpcfg/servers/12FactorAppServer/apps/12-factor-application.war /config/dropins/
-ADD ./12-factor-wlpcfg/servers/12FactorAppServer/apps/12-factor-application.war /opt/ibm/wlp/usr/servers/defaultServer/dropins/
+ADD ./12-factor-wlpcfg/servers/12FactorAppServer/apps/12-factor-application.war /config/dropins/
+
 
 ## Set some environment vars in the container
 ENV PATH=/opt/ibm/wlp/bin:$PATH
