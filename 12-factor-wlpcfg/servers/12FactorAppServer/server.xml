@@ -11,8 +11,9 @@
     <httpEndpoint host="*" httpPort="9082" httpsPort="9445"
         id="defaultHttpEndpoint" />
    
-    <webApplication contextRoot="12-factor-application" id="12-factor-application" location="12-factor-application.war" name="12-factor-application"/>
+    <application context-root="12-factor-application" type="war" id="12-factor-application" location="12-factor-application.war" name="12-factor-application"/>
  <!--    
+<webApplication contextRoot="12-factor-application" id="12-factor-application" location="12-factor-application.war" name="12-factor-application"/>
 <applicationMonitor updateTrigger="mbean" />    
 -->
 
