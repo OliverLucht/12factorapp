@@ -11,7 +11,7 @@
  "release" : {
    "name" : "an12factorappv1",
    "chart_dir" : "./helm/12factorapp",
-   "initialInstall" : true,
+   "initialInstall" : false,
    "test" : true,
    "dryrun" : false
  }
